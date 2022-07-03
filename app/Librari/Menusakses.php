@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 
-use App\Librari\Globaltools;
+use App\Librari\GlobalTools;
 use App\Models\Menu_akses;
 
 class Menusakses {
@@ -15,7 +15,7 @@ class Menusakses {
 
     public function getMenus()
     {
-        $Globaltools = new Globaltools();
+        $Globaltools = new GlobalTools();
         $checkUsers  = $Globaltools->userAkses();
         $teksmenu    = "";
 
