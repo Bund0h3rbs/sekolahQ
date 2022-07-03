@@ -180,22 +180,22 @@ class MenusController extends Controller
         $menu_id      = $request->menu_id;
 
         if(count($select_akses ) > 0){
-            $checkaksesmenu = \App\MOdels\Menu_role::where('menu_id',$menu_id)->whereNotin('akses_id',$select_akses)->count();
+            $checkaksesmenu = \App\Models\Menu_role::where('menu_id',$menu_id)->whereNotin('akses_id',$select_akses)->count();
             // dd($checkaksesmenu);
             if($checkaksesmenu > 0){
                 $row_update['active'] = 0;
-                \App\MOdels\Menu_role::where('menu_id',$menu_id)->whereNotin('akses_id',$select_akses)->update($row_update);
+                \App\Models\Menu_role::where('menu_id',$menu_id)->whereNotin('akses_id',$select_akses)->update($row_update);
             }
 
             foreach($select_akses as $key => $value){
                 $row['menu_id']  = $menu_id;
                 $row['akses_id'] = $value;
                 $row['active']   = 1;
-                $aksesmenu = \App\MOdels\Menu_role::where('menu_id',$menu_id)->where('akses_id',$value)->first();
+                $aksesmenu = \App\Models\Menu_role::where('menu_id',$menu_id)->where('akses_id',$value)->first();
                 if($aksesmenu){
                     $aksesmenu->update($row);
                 }else{
-                    \App\MOdels\Menu_role::create($row);
+                    \App\Models\Menu_role::create($row);
                 }
             }
         }
