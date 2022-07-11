@@ -19,7 +19,7 @@
         <div class="form-group row">
             <div class="col-md-8">
                 <label>Parent</label>
-                {{Form::select('parent',[''=>'-- Pilih --']+$parent, $data->parent ?? null,array('class'=>'form-control select2 border-br-10'))}}
+                {{Form::select('parent',[''=>'Pilih']+$parent, $data->parent ?? null,array('class'=>'form-control select2 border-br-10','data-placeholder'=>'Pilih Salah Satu','id'=>'parent'))}}
                 <span class="text-muted-info text-8">Jika menu memiliki induk</span>
             </div>
             <div class="col-md-4">
@@ -76,9 +76,12 @@
 
 <script>
 
-$('.select2').select2({
-    theme: 'bootstrap4'
-});
+$(function(){
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    });
+
+})
 
     $.validator.setDefaults({
         submitHandler: function () {

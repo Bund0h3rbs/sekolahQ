@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>SEKOLAH Q</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('assets/img/icon.ico')}}" type="image/x-icon"/>
     <link rel="stylesheet" href="{{asset('assets/fonts/icomoon/style.css')}}">
@@ -17,7 +18,7 @@
   <div class="content" style="padding-top:7rem; padding-bottom:0px">
     <div class="container" >
       <div class="row">
-        <div class="col-md-6 order-md-2" style="margin-top:-5rem;">
+        <div class="col-md-6 order-md-2 d-none d-lg-block" style="margin-top:-5rem;">
           <img src="{{asset('assets/img/login.png')}}" alt="Image" class="img-fluid">
         </div>
         <div class="col-md-6 contents">

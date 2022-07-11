@@ -119,5 +119,52 @@ class GlobalTools {
         return $menus_parent;
     }
 
+    public function gender($id)
+    {
+        $data= null;
+        switch($id){
+            case 1:
+                $data = "Laki - Laki";
+            break;
+            case 2:
+                $data = "Perempuan";
+            break;
+            default:
+                $data = "-";
+        }
+
+        return $data;
+    }
+
+
+    public function religion($id)
+    {
+        $data= null;
+        switch($id){
+            case 1:
+                $data = "ISLAM";
+            break;
+            case 2:
+                $data = "KRISTEN";
+            break;
+            case 3:
+                $data = "KRISTEN KATOLIK";
+            break;
+            case 4:
+                $data = "HINDU";
+            break;
+            case 5:
+                $data = "BUDHA";
+            break;
+            case 6:
+                $data = "KONGHUCU";
+            break;
+            default:
+                $data = "-";
+        }
+
+        return $data;
+    }
+
 }
 

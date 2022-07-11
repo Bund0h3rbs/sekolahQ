@@ -1,39 +1,50 @@
 <?php
 
-namespace App\Http\Controllers\Management;
+namespace App\Http\Controllers\Kesiswaan;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Form;
 
-use App\Librari\GlobalTools;
-use App\Models\Jabatan;
 
-class JabatanController extends Controller
+use App\Librari\GlobalTools;
+use App\Models\Student;
+
+class StudentController extends Controller
 {
-    protected $folder = "management.jabatan";
+    protected $folder = "kesiswaan.student";
     protected $tabel;
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->tabel = new Jabatan();
+        $this->tabel = new Student();
     }
 
     public function index(Request $request)
     {
         $checkAkses = GlobalTools::aksesmenu();
         if($checkAkses->status == true){
-            $with['title'] = "Jabatan / Tingkatan";
+            $with['title'] = "Daftar Siswa";
+            $with['kelas'] = \App\Models\Kelas::pluck('name','id')->all();
+            $with['tahun_akademik'] = \App\Models\Academic_year::whereNull('parent')->pluck('name','id')->all();
+            $with['folder'] = $this->folder;
+            $with['request'] = $request->all();
             return view($this->folder.'.index', $with);
         }else{
             return redirect('/home');
         }
     }
 
+    public function filterdata(Request $request)
+    {
+        $with = [];
+        return view($this->folder.'.getlist', $with);
+    }
+
     public function getlist(Request $request)
     {
-
+        $tools = GlobalTools::aksesmenu();
         $data  = $this->tabel->filterlist($request);
         $count = count($data->get());
 
@@ -70,8 +81,11 @@ class JabatanController extends Controller
              ."</div>";
 
            $row[] = $tombol;
-           $row[] = $x->code ?? '-';
+           $row[] = $x->nis ?? '-';
            $row[] = $x->name ?? 'na';
+           $row[] = $tempat_lahir;
+           $row[] = $tools->gender($x->gender);
+           $row[] = $x->student_level->kelas->name ?? "<span class='badge badge-danger p-2'>Belum Terdaftar</span>";
            $row[] = $status;
 
             $records["data"][] = $row;
@@ -93,7 +107,8 @@ class JabatanController extends Controller
         $checkmenu = $this->tabel->find($id);
 
         $with['data']   = $checkmenu;
-        return view($this->folder.'.formcreate', $with);
+        $with['folder'] = $this->folder.'.form';
+        return view($this->folder.'.form.defaultform', $with);
 
     }
 

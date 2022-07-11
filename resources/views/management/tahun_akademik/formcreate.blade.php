@@ -29,6 +29,20 @@
                 <span class="text-muted text-8">Jika Merupakan Semester</span>
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label>Tanggal Awal</label>
+                {{Form::date('start_date', isset($data->start_date)? $data->start_date : null,array('class'=>'form-control border-br-10'))}}
+                <span class="text-muted text-8">Tanggal Awal Pembelajaran</span>
+            </div>
+
+            <div class="col-md-6">
+                <label>Tanggal Akhir</label>
+                {{Form::date('end_date', isset($data->end_date)? $data->end_date : null,array('class'=>'form-control border-br-10'))}}
+                <span class="text-muted text-8">Tanggal Akhir Pembelajaran</span>
+            </div>
+
+        </div>
         <div class="form-group">
             <label>Keterangan </label>
             {{ Form::textarea('description',$data->description ?? null, array('class'=>'form-control border-br10','id'=>'description','placeholder'=>'Pengaturan','rows'=>"5"))}}

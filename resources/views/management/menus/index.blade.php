@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog" id="modalform">
+<div class="modal"  role="dialog" id="modalform">
     <div class="modal-dialog modal-65" role="document">
       <div class="modal-content" id="content-modal">
 
