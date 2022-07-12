@@ -44,7 +44,7 @@ class StudentController extends Controller
 
     public function getlist(Request $request)
     {
-        $tools = GlobalTools::aksesmenu();
+        $tools = new GlobalTools();
         $data  = $this->tabel->filterlist($request);
         $count = count($data->get());
 
@@ -68,12 +68,28 @@ class StudentController extends Controller
         $parentName = "-";
         foreach ($listdata as $x) {
             $row = array();
+            $genders   = $tools->gender();
+            $religion = $tools->religion();
+            $jeniskelamin = isset($genders[$x->gender]) ? $genders[$x->gender] : 'N/A';
 
-            if($x->active == 1){
-              $status = '<span class="badge badge-primary p-2"> Publish </span>';
-            }else{
-             $status = "<span class='badge badge-danger p-2'> Draf </span>";
+
+            switch($x->status_siswa){
+                case 2:
+                    $status = "<span class='badge badge-primary p-2'> Aktif </span>";
+                break;
+                case 3:
+                    $status = "<span class='badge badge-success p-2'> LULUS </span>";
+                break;
+                default:
+                $status = "<span class='badge badge-danger p-2'> Terdaftar </span>";
+
             }
+           
+            $place = $x->birth_place ?? null;
+            $date  = isset($x->birth_date) ? date('d-M-Y',strtotime($x->birth_date)) : null;
+
+            $nama_siswa = "<dt class='text-9'>". $x->name ."</dt>";
+            $nama_siswa .="<dd class='text-7 text-primary'>".$jeniskelamin ."</dd>";
 
             $tombol ="<div class='text-center'>"
              ."<a href='javascript:;' class='badge btn-outline-danger p-2' onclick='deletemenu(".$x->id.");' title='Hapus Data'><i class='fa fa-trash-alt text-9'></i></a>&nbsp;"
@@ -82,9 +98,8 @@ class StudentController extends Controller
 
            $row[] = $tombol;
            $row[] = $x->nis ?? '-';
-           $row[] = $x->name ?? 'na';
-           $row[] = $tempat_lahir;
-           $row[] = $tools->gender($x->gender);
+           $row[] = $nama_siswa;
+           $row[] = $place .','.$date;
            $row[] = $x->student_level->kelas->name ?? "<span class='badge badge-danger p-2'>Belum Terdaftar</span>";
            $row[] = $status;
 
@@ -103,38 +118,74 @@ class StudentController extends Controller
 
     public function create(Request $request)
     {
+        $tools =
         $id = $request->id;
         $checkmenu = $this->tabel->find($id);
 
         $with['data']   = $checkmenu;
         $with['folder'] = $this->folder.'.form';
+        $with['gender']   = GlobalTools::gender();
+        $with['religion'] = GlobalTools::religion();
         return view($this->folder.'.form.defaultform', $with);
 
     }
-
 
     public function store(Request $request)
     {
         $input = $request->input();
 
+        $name_family        = $request->name_family;
+        $birth_place_family = $request->birth_place_family;
+        $birth_date_family  = $request->birth_date_family;
+        $religion_family    = $request->religion_family;
+        $job_title_family   = $request->job_title_family;
+        $no_telp_family     = $request->no_telp_family;
+        $address_family     = $request->address_family;
+
             foreach ($input as $k => $v) //get value from $_POST
             {
-                if(!in_array($k, array("_token","id")))
+                if(!in_array($k, array("_token")))
                 {
                     $row[$k]=$v;
                 }
             }
 
-        $row['active'] = 0;
-            if(isset($request->active)){
-                $row['active'] = 1;
+            $row['active']       = 1;
+            $row['status_siswa'] = 1;
+            $row['address']      = $request->address_siswa ?? null;
+            $student =  $this->tabel->create($row);
+            $student_id = $student->id;
+            foreach($name_family as $x => $value){
+                if($value){
+                    switch($x){
+                        case 0:
+                            $gender = 1;
+                            $family_status = 1;
+                        break;
+                        case 1:
+                            $gender = 2;
+                            $family_status = 2;
+                        break;
+                        default:
+                           $gender = null;
+                           $family_status = 3;
+
+                    }
+                    $family['student_id']  = $student_id;
+                    $family['name']        = $value;
+                    $family['birth_place'] = isset($birth_place_family[$x]) ? $birth_place_family[$x] : null;
+                    $family['birth_date '] = isset($birth_date_family[$x]) ? $birth_date_family[$x] : null;
+                    $family['religion']    = isset($religion_family[$x]) ? $religion_family[$x] : null;
+                    $family['address']     = isset($address_family[$x]) ? $address_family[$x] : null;
+                    $family['no_telp']     = isset($no_telp_family[$x]) ? $no_telp_family[$x] : null;
+
+                    $family['gender']      = $gender;
+                    $family['active']      = 1;
+                    $family['family_status'] = $family_status;
+                    \App\Models\Student_family::create($family);
+                    // $kel[] = $family;
+                }
             }
-        $saveMenus = $this->tabel->find($request->id);
-        if($saveMenus){
-            $saveMenus->update($row);
-        }else{
-            $this->tabel->create($row);
-        }
 
         $success = true;
         echo json_encode(array("success"=>$success));

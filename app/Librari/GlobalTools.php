@@ -119,51 +119,41 @@ class GlobalTools {
         return $menus_parent;
     }
 
-    public function gender($id)
+    public function gender()
     {
-        $data= null;
-        switch($id){
-            case 1:
-                $data = "Laki - Laki";
-            break;
-            case 2:
-                $data = "Perempuan";
-            break;
-            default:
-                $data = "-";
-        }
-
-        return $data;
+        $gender = [
+            1=> 'LAKI - LAKI',
+            2=> 'PEREMPUAN',
+        ];
+        return $gender;
     }
 
 
-    public function religion($id)
+    public function religion()
     {
-        $data= null;
-        switch($id){
-            case 1:
-                $data = "ISLAM";
-            break;
-            case 2:
-                $data = "KRISTEN";
-            break;
-            case 3:
-                $data = "KRISTEN KATOLIK";
-            break;
-            case 4:
-                $data = "HINDU";
-            break;
-            case 5:
-                $data = "BUDHA";
-            break;
-            case 6:
-                $data = "KONGHUCU";
-            break;
-            default:
-                $data = "-";
-        }
+        $religion = [
+            1=> 'ISLAM',
+            2=> 'KRISTEN',
+            3=> 'KRISTEN KATOLIK',
+            4=> 'HINDU',
+            5=> 'BUDHA',
+            6=> 'KONGHUCU',
+        ];
+        return $religion;
+    }
 
-        return $data;
+    public function family_status()
+    {
+        $religion = [
+            1=> 'Ayah',
+            2=> 'Ibu',
+            3=> 'Wali',
+            4=> 'Paman',
+            5=> 'Bibi',
+            6=> 'Saudara Laki-laki',
+            6=> 'Saudara Perempuan',
+        ];
+        return $religion;
     }
 
 }

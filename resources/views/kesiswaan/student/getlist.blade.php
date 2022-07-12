@@ -21,11 +21,10 @@
         <table id="table_list" class="table table-bordered table-striped" >
             <thead>
                 <tr class="bg-primary text-white">
-                    <th style="min-width:120px">#</th>
-                    <th>NIS</th>
-                    <th>Nama</th>
+                    <th style="min-width:80px">#</th>
+                    <th style="max-width:100px">NIS</th>
+                    <th style="min-width:130px">Nama</th>
                     <th>Tempat, Tgl Lahir</th>
-                    <th>Jenis Kelamin</th>
                     <th>Kelas / Tingkatan</th>
                     <th>Status</th>
                 </tr>
