@@ -50,11 +50,17 @@ if(Request::is(['home','home/*'])){
     }else if(Request::is(['activity','activity/*'])){
         require __DIR__.'/management/activity.php';
 
+    }else if(Request::is(['mail_in','mail_in/*'])){
+        require __DIR__.'/management/mail_in.php';
+
+    }else if(Request::is(['mail_out','mail_out/*'])){
+        require __DIR__.'/management/mail_out.php';
+    }
     /* ======================
         | Default Route Kesiswaan
         | Route Group
         =========================  */
-    }else if(Request::is(['student','student/*'])){
+    else if(Request::is(['student','student/*'])){
         require __DIR__.'/kesiswaan/student.php';
 
     }else if(Request::is(['rombel','rombel/*'])){

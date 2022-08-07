@@ -29,9 +29,10 @@ class Student extends Model {
       }
 
     public function filterlist($request){
+        // dd($request->all());
       if (!empty($request->search['value'])){
           $value = $request->search['value'];
-              $data =  Student::where('code', 'LIKE', '%' . $value . '%')
+              $data =  Student::where('nis', 'LIKE', '%' . $value . '%')
               ->orWhere('name', 'LIKE', '%' . $value . '%');
         }else {
               $data = Student::select(['*']);

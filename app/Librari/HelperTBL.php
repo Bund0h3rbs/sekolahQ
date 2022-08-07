@@ -36,6 +36,12 @@ class HelperTBL {
                         $.each(data, function(key, value) {
                                     data[key] = value;
                         });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status != 0)
+                        {
+                            // alert('A system error has occurred (More information).');
+                        }
                     }
                 }"
             ."})"

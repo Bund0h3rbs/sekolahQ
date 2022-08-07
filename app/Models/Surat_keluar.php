@@ -27,8 +27,9 @@ class Surat_keluar extends Model {
     public function filterlist($request){
       if (!empty($request->search['value'])){
           $value = $request->search['value'];
-              $data =  Surat_keluar::where('code', 'LIKE', '%' . $value . '%')
-              ->orWhere('name', 'LIKE', '%' . $value . '%');
+              $data =  Surat_keluar::where('no_surat', 'LIKE', '%' . $value . '%')
+              ->orWhere('name', 'LIKE', '%' . $value . '%')
+              ->orWhere('tujuan', 'LIKE', '%' . $value . '%');
         }else {
               $data = Surat_keluar::select(['*']);
       }

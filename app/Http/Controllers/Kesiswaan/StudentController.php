@@ -44,6 +44,7 @@ class StudentController extends Controller
 
     public function getlist(Request $request)
     {
+
         $tools = new GlobalTools();
         $data  = $this->tabel->filterlist($request);
         $count = count($data->get());
@@ -84,7 +85,7 @@ class StudentController extends Controller
                 $status = "<span class='badge badge-danger p-2'> Terdaftar </span>";
 
             }
-           
+
             $place = $x->birth_place ?? null;
             $date  = isset($x->birth_date) ? date('d-M-Y',strtotime($x->birth_date)) : null;
 
