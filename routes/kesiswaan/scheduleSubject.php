@@ -4,14 +4,14 @@
 | Default Route Menu
  =====================*/
 
-Route::group(['prefix' => 'scheduleSubject', 'middleware' => ['auth'], 'namespace'=>'App\Http\Controllers\Management' ], function() {
-    Route::get('/', function () {
-        return view('template.maintance');
-    });
-    // Route::get('/', ['as' => 'Aktifitas', 'uses' => 'ActivityController@index']);
+Route::group(['prefix' => 'scheduleSubject', 'middleware' => ['auth'], 'namespace'=>'App\Http\Controllers\Kesiswaan' ], function() {
+    // Route::get('/', function () {
+    //     return view('template.maintance');
+    // });
+    Route::get('/', ['as' => 'Jadwal Matapelajaran', 'uses' => 'ScheduleSubjectController@index']);
 
-    // Route::post('/create',  ['as' => 'klsconfig.create', 'uses' => 'ActivityController@create']);
-    // Route::post('/getlist', ['as' => 'klsconfig.getlist', 'uses' => 'ActivityController@getlist']);
-    // Route::post('/store',   ['as' => 'klsconfig.store', 'uses' => 'ActivityController@store']);
-    // Route::post('/delete',  ['as' => 'klsconfig.delete', 'uses' => 'ActivityController@delete']);
+    Route::post('/create',  ['as' => 'mapel.create', 'uses' => 'ScheduleSubjectController@create']);
+    Route::post('/getlist', ['as' => 'mapel.getlist', 'uses' => 'ScheduleSubjectController@getlist']);
+    Route::post('/store',   ['as' => 'mapel.store', 'uses' => 'ScheduleSubjectController@store']);
+    Route::post('/delete',  ['as' => 'mapel.delete', 'uses' => 'ScheduleSubjectController@delete']);
 });

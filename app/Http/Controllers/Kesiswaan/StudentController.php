@@ -101,7 +101,7 @@ class StudentController extends Controller
            $row[] = $x->nis ?? '-';
            $row[] = $nama_siswa;
            $row[] = $place .','.$date;
-           $row[] = $x->student_level->kelas->name ?? "<span class='badge badge-danger p-2'>Belum Terdaftar</span>";
+           $row[] = isset($x->student_level->kelas->name)? "<span class='badge badge-primary p-2'>".$x->student_level->kelas->name."</span>" : "<span class='badge badge-danger p-2'>Belum Terdaftar</span>";
            $row[] = $status;
 
             $records["data"][] = $row;
@@ -123,10 +123,12 @@ class StudentController extends Controller
         $id = $request->id;
         $checkmenu = $this->tabel->find($id);
 
-        $with['data']   = $checkmenu;
-        $with['folder'] = $this->folder.'.form';
+        $with['data']     = $checkmenu;
+        $with['folder']   = $this->folder.'.form';
         $with['gender']   = GlobalTools::gender();
         $with['religion'] = GlobalTools::religion();
+        $with['kelas']    = \App\Models\Kelas::where('active',1)->pluck('name','id')->all();
+        $with['academic_year']    = \App\Models\Academic_year::where(['active'=>1,'parent'=>1])->pluck('name','id')->all();
         return view($this->folder.'.form.defaultform', $with);
 
     }

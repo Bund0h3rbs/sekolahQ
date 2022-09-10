@@ -65,7 +65,8 @@ if(Request::is(['home','home/*'])){
 
     }else if(Request::is(['rombel','rombel/*'])){
         require __DIR__.'/kesiswaan/rombel.php';
-
+    }else if(Request::is(['classroom','classroom/*'])){
+        require __DIR__.'/kesiswaan/classroom.php';
     }else if(Request::is(['scheduleSubject','scheduleSubject/*'])){
         require __DIR__.'/kesiswaan/scheduleSubject.php';
 

@@ -25,7 +25,7 @@ class Student extends Model {
     }
 
     public function student_level(){
-        return $this->hasOne('App\Models\Student_level','id','student_id')->where('active',1)->orderBy('id','desc');
+        return $this->hasOne('App\Models\Student_level','student_id','id')->where('active',1)->orderBy('id','desc');
       }
 
     public function filterlist($request){

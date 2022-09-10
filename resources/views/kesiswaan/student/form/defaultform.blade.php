@@ -52,34 +52,57 @@ $('.select2').select2({
     theme: 'bootstrap4'
 });
 
-   $('#btn-simpan').click(function(){
-    $.ajax({
-        type: "POST",
-        url: "{{route('student.store')}}",
-        data: $("#form-student").serialize(), // serializes the form's elements.
-        beforeSend: function () {
-            // $('#form_create').append('<div class="loader "><div class="loading"></div></div>');
-        },
-        success: function(data)
-        {
-            // $('.loader').remove();
-
-            $("#btn-reload").trigger('click');
-            data = jQuery.parseJSON(data);
-            if(data.success == true)
-            {
-            $('#form-student')[0].reset();
-                $("#btn-reload").trigger('click');
-            }
-        }, error: function (xhr, ajaxOptions, thrownError) {
-            swal({
-                title:"Informasi!",
-                text: "Terdapat Kesalahan Data, Pastikan Pengisian Telah Benar",
-                icon: "warning",
-                buttons: false,
-                timer: 1000,
-            });
+    $.validator.setDefaults({
+        submitHandler: function () {
+            saveform();
         }
     });
-  })
+
+    $('#form-student').validate({
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.input-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+//    $('#btn-simpan').click(function(){
+
+    function saveform(){
+        $.ajax({
+            type: "POST",
+            url: "{{route('student.store')}}",
+            data: $("#form-student").serialize(), // serializes the form's elements.
+            beforeSend: function () {
+                // $('#form_create').append('<div class="loader "><div class="loading"></div></div>');
+            },
+            success: function(data)
+            {
+                // $('.loader').remove();
+
+                $("#btn-reload").trigger('click');
+                data = jQuery.parseJSON(data);
+                if(data.success == true)
+                {
+                $('#form-student')[0].reset();
+                    $("#btn-reload").trigger('click');
+                }
+            }, error: function (xhr, ajaxOptions, thrownError) {
+                swal({
+                    title:"Informasi!",
+                    text: "Terdapat Kesalahan Data, Pastikan Pengisian Telah Benar",
+                    icon: "warning",
+                    buttons: false,
+                    timer: 1000,
+                });
+            }
+        });
+    }
+//   })
 </script>
